@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :role_id, presence: true
 
   belongs_to :role
+  belongs_to :team, optional: true
 
   def generate_new_authentication_token
     token = User.generate_unique_secure_token
