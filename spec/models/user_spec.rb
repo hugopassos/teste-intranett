@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it { should belong_to(:role) }
+  it { should belong_to(:team) }
 
   let(:user) { User.new(email: 'teste@mail.com', password: '123456', role_id: '') }
 
