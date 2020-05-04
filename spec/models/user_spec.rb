@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { should belong_to(:role) }
 
-  let(:user) { User.new(email:'teste@mail.com', password: '123456', role_id: '') }
+  let(:user) { User.new(email: 'teste@mail.com', password: '123456', role_id: '') }
 
   describe '#email' do
     it 'should not allow invalid format' do
