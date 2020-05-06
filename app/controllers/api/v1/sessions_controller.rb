@@ -2,6 +2,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   before_action :load_user, only: :create
   before_action :valid_token, only: :destroy
   skip_before_action :verify_signed_out_user, only: :destroy
+  skip_before_action :authenticate
 
   def create
     if @user.valid_password?(user_params[:password])
@@ -36,7 +37,7 @@ class Api::V1::SessionsController < Devise::SessionsController
     if (@user = User.find_by(authentication_token: request.headers['AUTH-TOKEN']))
       @user
     else
-      json_response 'Algo deu errado', false, {}, :expectation_failed
+      json_response 'Token de acesso inválido ou não informado', false, {}, :unauthorized
     end
   end
 end
