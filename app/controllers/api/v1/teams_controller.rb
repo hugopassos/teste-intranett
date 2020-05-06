@@ -9,7 +9,7 @@ class Api::V1::TeamsController < ApplicationController
     team = Team.new(team_params)
     if team.save
       # Ao criar uma equipe, o gestor tambem passa a fazer parte dela
-      current_user.update_attributes(team_id: team.id)
+      @current_user.update_attributes(team_id: team.id)
       json_response 'Equipe criada com sucesso', true, { team: team }, :ok
     else
       json_response 'Algo deu errado', false, {}, :unprocessable_entity
@@ -44,7 +44,7 @@ class Api::V1::TeamsController < ApplicationController
   def update
     team = Team.find_by(id: params[:id])
     # Gestores podem alterar apenas equipes que tenham criado
-    if current_user.team_id == team.id
+    if @current_user.team_id == team.id
       users_not_in_team = team_params[:users_not_in_team]
       users_in_team = team_params[:users_in_team]
 
@@ -86,8 +86,8 @@ class Api::V1::TeamsController < ApplicationController
   def manager?
     gestor_id = Role.where(name: 'Gestor').first.id
 
-    return if current_user.role_id == gestor_id
+    return if @current_user.role_id == gestor_id
 
-    json_response 'Somente gestores podem criar/alterar equipes', false, {}, :unauthorized
+    json_response 'Somente gestores podem criar/alterar equipes', false, {}, :forbidden
   end
 end
