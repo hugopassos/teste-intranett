@@ -89,7 +89,7 @@ class Api::V1::TeamsController < ApplicationController
     User.where(team_id: team_id).map(&:serialize)
   end
 
-  def load_users_not_in_team(*)
+  def load_users_not_in_team(team_id)
     User.where(team_id: nil).map(&:serialize)
   end
 end
