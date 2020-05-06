@@ -6,7 +6,6 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def create
     if @user.valid_password?(user_params[:password])
-      sign_in(:user, @user)
       json_response 'Bem vindo!', true, { user: @user }, :ok
     else
       json_response 'Email ou senha inválidos', false, {}, :unauthorized
@@ -14,7 +13,6 @@ class Api::V1::SessionsController < Devise::SessionsController
   end
 
   def destroy
-    sign_out @user
     @user.generate_new_authentication_token
     json_response 'Logout realizado com sucesso', true, {}, :ok
   end
