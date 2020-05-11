@@ -18,5 +18,7 @@ FactoryBot.define do
 
   factory :task do
     title { 'Task 1' }
+    start_time { Time.now }
+    status_id { Status.find_by(name: 'Em andamento').id }
   end
 end
