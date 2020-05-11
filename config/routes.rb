@@ -11,7 +11,8 @@ Rails.application.routes.draw do
         delete :logout, to: 'sessions#destroy'
       end
 
-      resources :teams, only: %i[new create edit update]
+      resources :teams, except: %i[index destroy]
+      resources :tasks, except: :destroy
     end
   end
 end

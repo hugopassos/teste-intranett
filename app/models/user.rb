@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   belongs_to :role
   belongs_to :team, optional: true
+  has_many :tasks
+  scope :colaborators, -> { where(role: colaborator_role) }
 
   def generate_new_authentication_token
     token = User.generate_unique_secure_token
