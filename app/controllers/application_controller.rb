@@ -10,4 +10,8 @@ class ApplicationController < ActionController::API
 
     json_response 'Token de acesso inválido ou não informado', false, {}, :unauthorized if @current_user.nil?
   end
+
+  def user_is_manager?(user)
+    true if user.role_id == Role.where(name: 'Gestor').first.id
+  end
 end
