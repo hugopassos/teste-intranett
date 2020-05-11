@@ -1,9 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :user
   belongs_to :status
-  validates_presence_of :title, :start_time, :status
-
-  after_initialize :init
+  validates_presence_of :title, :start_time
 
   def self.load_team_tasks(user)
     Task.where(user_id: User.where(team_id: user.team_id)).order(:status_id)
@@ -15,12 +13,5 @@ class Task < ApplicationRecord
 
   def serialize
     TaskSerializer.new(self).to_hash
-  end
-
-  private
-
-  def init
-    self.start_time = Time.now
-    self.status_id = Status.find_by(name: 'Em andamento').id
   end
 end
